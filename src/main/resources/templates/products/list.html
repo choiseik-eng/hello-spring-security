@@ -105,6 +105,14 @@
         </div>
     </div>
 </div>
+<div class="container text-center mt-5 mb-4">
+    <hr>
+    <p class="text-muted" style="font-size: 0.95rem; letter-spacing: -0.5px;">
+        학번: <strong>2191036</strong> │
+        성명: <strong>최세익</strong> │
+        실습 수행: <span class="fw-semibold text-dark" th:text="${'실습 수행: ' + #temporals.format(#temporals.createNow(), 'yyyy-MM-dd HH:mm:ss')}">2026-05-30 00:00:00</span>
+    </p>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
