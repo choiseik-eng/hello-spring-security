@@ -16,6 +16,18 @@
 <nav class="navbar navbar-expand-lg navbar-dark mb-4">
     <div class="container">
         <a class="navbar-brand" th:href="@{/home}">HanSung</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" th:href="@{/home}">홈</a></li>
+                <li class="nav-item"><a class="nav-link active" th:href="@{/products}">상품 목록</a></li>
+            </ul>
+            <form th:action="@{/logout}" method="post" class="d-flex">
+                <button class="btn btn-outline-light btn-sm px-3">로그아웃</button>
+            </form>
+        </div>
     </div>
 </nav>
 
@@ -25,25 +37,49 @@
             <h4 class="fw-bold text-center text-dark">상품 정보 수정</h4>
         </div>
         <div class="card-body px-4 pb-4">
-            <form th:action="@{/products/{id}/edit(id=${productId})}" th:object="${product}" method="post">
+
+            <!-- 수정 성공 메시지 -->
+            <div th:if="${successMessage}" class="alert alert-success py-2 small"
+                 th:text="${successMessage}"></div>
+
+            <!-- @Valid 검증 실패 오류 메시지 -->
+            <div th:if="${#fields.hasErrors('*')}" th:object="${product}">
+                <div class="alert alert-danger py-2 small">
+                    <ul class="mb-0 ps-3">
+                        <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <form th:action="@{/products/{id}/edit(id=${productId})}"
+                  th:object="${product}" method="post">
 
                 <div class="mb-3">
-                    <label for="name" class="form-label fw-semibold">상품명</label>
-                    <input type="text" th:field="*{name}" class="form-control" required/>
+                    <label class="form-label fw-semibold">상품명</label>
+                    <input type="text" th:field="*{name}" class="form-control"
+                           th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" required/>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}"
+                         th:errors="*{name}"></div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="price" class="form-label fw-semibold">가격 (원)</label>
-                    <input type="number" th:field="*{price}" class="form-control" required/>
+                    <label class="form-label fw-semibold">가격 (원)</label>
+                    <input type="number" th:field="*{price}" class="form-control"
+                           th:classappend="${#fields.hasErrors('price')} ? 'is-invalid'" required/>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('price')}"
+                         th:errors="*{price}"></div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="stock" class="form-label fw-semibold">재고 수량</label>
-                    <input type="number" th:field="*{stock}" class="form-control" required/>
+                    <label class="form-label fw-semibold">재고 수량</label>
+                    <input type="number" th:field="*{stock}" class="form-control"
+                           th:classappend="${#fields.hasErrors('stock')} ? 'is-invalid'" required/>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('stock')}"
+                         th:errors="*{stock}"></div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="description" class="form-label fw-semibold">상품 설명</label>
+                    <label class="form-label fw-semibold">상품 설명</label>
                     <textarea th:field="*{description}" class="form-control" rows="3"></textarea>
                 </div>
 
@@ -56,12 +92,16 @@
     </div>
 </div>
 
+<!-- 실습 증적 Footer -->
 <div class="container text-center mt-5 mb-4">
     <hr>
     <p class="text-muted" style="font-size: 0.95rem; letter-spacing: -0.5px;">
         학번: <strong>2191036</strong> │
         성명: <strong>최세익</strong> │
-        실습 수행: <span class="fw-semibold text-dark" th:text="${'실습 수행: ' + #temporals.format(#temporals.createNow(), 'yyyy-MM-dd HH:mm:ss')}">2026-05-30 00:00:00</span>
+        실습 수행:
+        <span class="fw-semibold text-dark"
+              th:text="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd HH:mm:ss')}">
+        </span>
     </p>
 </div>
 
