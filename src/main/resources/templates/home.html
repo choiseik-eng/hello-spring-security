@@ -42,6 +42,14 @@
 </nav>
 
 <div class="container">
+
+    <!-- 비밀번호 변경 성공 메시지 (flash attribute) -->
+    <div th:if="${successMessage}"
+         class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
     <div class="welcome-card p-4 mb-4">
         <div class="d-flex justify-content-between align-items-start">
             <div>
@@ -53,7 +61,8 @@
                           th:text="${role}"></span>
                 </div>
             </div>
-            <a th:href="@{/user/change-password}" class="btn btn-danger btn-sm px-3 fw-semibold shadow-sm">비밀번호 변경</a>
+            <a th:href="@{/user/change-password}"
+               class="btn btn-danger btn-sm px-3 fw-semibold shadow-sm">비밀번호 변경</a>
         </div>
     </div>
 
@@ -82,12 +91,16 @@
     </div>
 </div>
 
+<!-- 실습 증적 Footer -->
 <div class="container text-center mt-5 mb-4">
     <hr>
     <p class="text-muted" style="font-size: 0.95rem; letter-spacing: -0.5px;">
         학번: <strong>2191036</strong> │
         성명: <strong>최세익</strong> │
-        실습 수행: <span class="fw-semibold text-dark" th:text="${'실습 수행: ' + #temporals.format(#temporals.createNow(), 'yyyy-MM-dd HH:mm:ss')}">2026-05-30 00:00:00</span>
+        실습 수행:
+        <span class="fw-semibold text-dark"
+              th:text="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd HH:mm:ss')}">
+        </span>
     </p>
 </div>
 
